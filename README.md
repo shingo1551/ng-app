@@ -1,4 +1,4 @@
-# Angularでpurgecss
+# Angularで[purgecss](https://purgecss.com/)
 
 purgecssは正式にはAngular対応ではないため、purgeの効果はやや緩い
 
@@ -10,7 +10,9 @@ $ cd ng-app
 $ npm i
 ```
 
-## usage
+## usage: [postcss-cli](https://github.com/postcss/postcss-cli)
+
+purgecssはpostcssのpluginとして動く
 
 ```
 $ npm run postcss ./src/styles.css
@@ -85,13 +87,13 @@ usedを使用しているが、unusedは使用していない
   }
   ```
 
-## postcssのplugin
+## [postcss](https://github.com/postcss/postcss)のplugin
 
-- @fullhuman/postcss-purgecss
-- autoprefixer
-- cssnano
-- postcss-import
-- tailwindcss
+- [@fullhuman/postcss-purgecss](https://github.com/FullHuman/postcss-purgecss)
+- [autoprefixer](https://github.com/postcss/autoprefixer)
+- [cssnano](https://cssnano.co)
+- [postcss-import](https://github.com/postcss/postcss-import)
+- [tailwindcss](https://tailwindcss.com)
 
 ## postcss.config.js
 
