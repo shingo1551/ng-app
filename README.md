@@ -1,27 +1,123 @@
-# NgApp
+# Angularでpurgecss
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.7.
+purgecssは正式にはAngular対応ではないため、purgeの効果はやや緩い
 
-## Development server
+## install
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```
+$ git clone https://github.com/shingo1551/ng-app.git
+$ cd ng-app
+$ npm i
+```
 
-## Code scaffolding
+## usage
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+$ npm run postcss ./src/styles.css
+```
 
-## Build
+## このProjectでの例
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+./src/styles.css の最下部
+```
+    ...
+@media screen and (max-width: 575px) {
+  svg#rocket-smoke {
+    display: none;
+    visibility: hidden;
+  }
+}
 
-## Running unit tests
+.unused {
+  color: blue;
+}
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+.used {
+  color: red;
+}
+```
 
-## Running end-to-end tests
+```
+$ npm run postcss ./src/styles.css
+```
+の実行結果の出力の最下部
+```
+    ...
+@media screen and (max-width: 575px) {
+  svg#rocket-smoke {
+    display: none;
+    visibility: hidden;
+  }
+}
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+.used {
+  color: red;
+}
+```
+.unsed が削除されている
 
-## Further help
+./src/app/app.component.htmlのほぼ最下部
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+  <!-- Footer -->
+  <footer [class]="{ used: bUsed }">
+    Love Angular?&nbsp;
+```
+
+usedを使用しているが、unusedは使用していない
+
+
+## package.json
+
+```
+  "devDependencies": {
+        ...
+    "@fullhuman/postcss-purgecss": "^4.0.3",
+        ...
+    "autoprefixer": "^10.3.5",
+    "cssnano": "^5.0.8",
+        ...
+    "postcss": "^8.3.8",
+    "postcss-cli": "^9.0.1",
+    "postcss-import": "^14.0.2",
+    "tailwindcss": "^2.2.15",
+        ...
+  }
+  ```
+
+## postcssのplugin
+
+- @fullhuman/postcss-purgecss
+- autoprefixer
+- cssnano
+- postcss-import
+- tailwindcss
+
+## postcss.config.js
+
+    下記の例では、postcss_import, tailwindcss, cssnano は未使用
+    コメントを外すことで使用可能
+
+```
+// const postcss_import = require('postcss-import')
+// const tailwindcss = require('tailwindcss')
+const autoprefixer = require('autoprefixer')
+const purgecss = require('@fullhuman/postcss-purgecss')
+// const cssnano = require('cssnano')
+
+module.exports = {
+  plugins: [
+    // postcss_import,
+    // tailwindcss,
+    autoprefixer,
+    purgecss({ content: ['./src/**/*.html']}),
+    // cssnano({ preset: 'default'})
+  ]
+}
+```
+
+ディレクトリ構成が異なる場合、
+
+    purgecss({ content: ['./src/**/*.html']}),
+
+の設定を変更すること。
