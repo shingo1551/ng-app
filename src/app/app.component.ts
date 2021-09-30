@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ng-app';
+  bUsed = false;
+
+  ngOnInit() {
+    this.bUsed = true;
+  }
 }
