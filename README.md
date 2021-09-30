@@ -123,3 +123,9 @@ module.exports = {
     purgecss({ content: ['./src/**/*.html']}),
 
 の設定を変更すること。
+
+.tsxにも対応しているので、stencilで、
+
+    purgecss({ content: ['./src/**/*.tsx']}),
+
+も可能
